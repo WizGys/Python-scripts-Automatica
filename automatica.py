@@ -11,9 +11,8 @@ def pidController(setpoint, actual, prev_error, integral, Kp, Ki, Kd, dt):
     output = Kp * error + Ki * integral + Kd * derivative
     return output, error, integral
 
-# System model
 def systemModel(y, t, u):
-    return (-y + u) / 5.0  # simple first order system
+    return (-y + u) / 5.0 
 
 # Simulation parameters
 dt = 0.01  # simulation time step
@@ -33,7 +32,6 @@ for i in range(1, N):
     u[i], prev_error, integral = pidController(setpoint, y[i-1], prev_error, integral, Kp, Ki, Kd, dt)
     y[i] = odeint(systemModel, y[i-1], [0, dt], args=(u[i],))[1]
 
-# Plot results
 plt.figure()
 plt.subplot(2, 1, 1)
 plt.plot(t, y, label='y')
